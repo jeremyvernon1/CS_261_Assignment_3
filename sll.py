@@ -184,6 +184,9 @@ class LinkedList:
             current = current.next
             return get_back_helper(current)
 
+        # checks that the list is not empty
+        if self.length() == 0:
+            raise SLLException
         # gets the value of the last eleement
         last_node = get_back_helper()
         return last_node.value
@@ -244,10 +247,9 @@ class LinkedList:
             return slice_helper(target_index, curr_index, size, current)
 
         # checks for valid parameters
-        length = self.length()
-        if start_index > (length - 1) \
+        if (start_index + size) > self.length() \
                 or start_index < 0 \
-                or (start_index + size) > length:
+                or size < 0:
             raise SLLException
         # creates a new list, and then adds elements to the new list
         new_list = LinkedList()
@@ -362,6 +364,17 @@ if __name__ == '__main__':
     list = LinkedList([10, 11, 12, 13, 14, 15, 16])
     print("SOURCE:", list)
     slices = [(0, 7), (-1, 7), (0, 8), (2, 3), (5, 0), (5, 3), (6, 1)]
+    for index, size in slices:
+        print("Slice", index, "/", size, end="")
+        try:
+            print(" --- OK: ", list.slice(index, size))
+        except:
+            print(" --- exception occurred.")
+
+    print('\n slice example 3')
+    list = LinkedList([-44833, -72604, 71651, 54351, 36147, -82785, 70524, -2173, -81096, 71506])
+    print("SOURCE:", list)
+    slices = [(2, -1), (-1, 7), (0, 8), (2, 3), (5, 0), (5, 3), (6, 1)]
     for index, size in slices:
         print("Slice", index, "/", size, end="")
         try:
