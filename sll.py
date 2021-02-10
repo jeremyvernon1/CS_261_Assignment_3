@@ -85,10 +85,20 @@ class LinkedList:
 
     def add_back(self, value: object) -> None:
         """
-        TODO: Write this implementation
+        Adds an element to the end of the list
         """
-        # traverse the list to find last node
-        pass
+        # traverses the list to find last node
+        def find_last(current= self.head):
+            if current.next == self.tail:
+                return current
+            current = current.next
+            return find_last(current)
+
+        # inserts the new node
+        last_node = find_last()
+        end_node = SLNode(value)
+        last_node.next = end_node
+        end_node.next = self.tail
 
     def insert_at_index(self, index: int, value: object) -> None:
         """
