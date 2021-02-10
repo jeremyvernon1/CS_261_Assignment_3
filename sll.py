@@ -253,7 +253,8 @@ class LinkedList:
             raise SLLException
         # creates a new list, and then adds elements to the new list
         new_list = LinkedList()
-        slice_helper()
+        if size > 0:
+            slice_helper()
         return new_list
 
 
@@ -374,7 +375,7 @@ if __name__ == '__main__':
     print('\n slice example 3')
     list = LinkedList([-44833, -72604, 71651, 54351, 36147, -82785, 70524, -2173, -81096, 71506])
     print("SOURCE:", list)
-    slices = [(2, -1), (-1, 7), (0, 8), (2, 3), (5, 0), (5, 3), (6, 1)]
+    slices = [(2, -1), (-1, 7), (0, 8), (2, 3), (5, 0), (5, 3), (6, 1), (0, 0)]
     for index, size in slices:
         print("Slice", index, "/", size, end="")
         try:
