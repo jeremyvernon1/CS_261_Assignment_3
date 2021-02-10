@@ -247,9 +247,11 @@ class LinkedList:
             return slice_helper(target_index, curr_index, size, current)
 
         # checks for valid parameters
-        if (start_index + size) > self.length() \
+        length = self.length()
+        if start_index > (length - 1) \
                 or start_index < 0 \
-                or size < 0:
+                or size < 0 \
+                or (start_index + size) > self.length():
             raise SLLException
         # creates a new list, and then adds elements to the new list
         new_list = LinkedList()
@@ -375,7 +377,7 @@ if __name__ == '__main__':
     print('\n slice example 3')
     list = LinkedList([-44833, -72604, 71651, 54351, 36147, -82785, 70524, -2173, -81096, 71506])
     print("SOURCE:", list)
-    slices = [(2, -1), (-1, 7), (0, 8), (2, 3), (5, 0), (5, 3), (6, 1), (0, 0)]
+    slices = [(2, -1), (-1, 7), (10, 0), (0, 8), (2, 3), (5, 0), (5, 3), (6, 1), (0, 0)]
     for index, size in slices:
         print("Slice", index, "/", size, end="")
         try:
