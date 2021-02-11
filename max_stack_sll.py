@@ -1,7 +1,7 @@
 # Course: CS261 - Data Structures
-# Student Name:
-# Assignment:
-# Description:
+# Student Name: Jeremy Vernon
+# Assignment: 3
+# Description: Max Stack
 
 
 from sll import *
@@ -51,83 +51,102 @@ class MaxStack:
 
     def push(self, value: object) -> None:
         """
-        TODO: Write this implementation
+        Adds value to the top of the stack
         """
-        pass
+        self.sll_val.add_front(value)
 
     def pop(self) -> object:
         """
-        TODO: Write this implementation
+        Pops the element at the top of the stack and returns that element
         """
-        pass
+        # checks if stack is empty
+        if self.is_empty():
+            raise StackException
+        # removes top element and returns the value of that element
+        popped = self.sll_val.head.next.value
+        self.sll_val.remove_front()
+        return popped
 
     def top(self) -> object:
         """
-        TODO: Write this implementation
+        Gets the value at the top of the stack
         """
-        pass
+        # checks if stack is empty
+        if self.is_empty():
+            raise StackException
+        # returns the value of the top element
+        return self.sll_val.head.next.value
 
     def get_max(self) -> object:
         """
-        TODO: Write this implementation
+        Gets max element
         """
-        pass
+        # checks if stack is empty
+        if self.is_empty():
+            raise StackException
+        # checks if there is only one element in the stack
+        if self.size() > 1:
+            # compares new top of stack with last element
+            second_to_top = self.sll_val.head.next.next.value
+            if self.top() > second_to_top:
+                return self.top()
+            return second_to_top
+        return self.top()
 
 
 # BASIC TESTING
 if __name__ == "__main__":
-    pass
 
-    # print('\n# push example 1')
-    # s = MaxStack()
-    # print(s)
-    # for value in [1, 2, 3, 4, 5]:
-    #     s.push(value)
-    # print(s)
-    #
-    #
-    # print('\n# pop example 1')
-    # s = MaxStack()
-    # try:
-    #     print(s.pop())
-    # except Exception as e:
-    #     print("Exception:", type(e))
-    # for value in [1, 2, 3, 4, 5]:
-    #     s.push(value)
-    # for i in range(6):
-    #     try:
-    #         print(s.pop())
-    #     except Exception as e:
-    #         print("Exception:", type(e))
-    #
-    #
-    # print('\n# top example 1')
-    # s = MaxStack()
-    # try:
-    #     s.top()
-    # except Exception as e:
-    #     print("No elements in stack", type(e))
-    # s.push(10)
-    # s.push(20)
-    # print(s)
-    # print(s.top())
-    # print(s.top())
-    # print(s)
-    #
-    # print('\n# get_max example 1')
-    # s = MaxStack()
-    # for value in [1, -20, 15, 21, 21, 40, 50]:
-    #     print(s, ' ', end='')
-    #     try:
-    #         print(s.get_max())
-    #     except Exception as e:
-    #         print(type(e))
-    #     s.push(value)
-    # while not s.is_empty():
-    #     print(s.size(), end='')
-    #     print(' Pop value:', s.pop(), ' get_max after: ', end='')
-    #     try:
-    #         print(s.get_max())
-    #     except Exception as e:
-    #         print(type(e))
+     print('\n push example 1')
+     s = MaxStack()
+     print(s)
+     for value in [1, 2, 3, 4, 5]:
+         s.push(value)
+     print(s)
+    
+    
+     print('\n pop example 1')
+     s = MaxStack()
+     try:
+         print(s.pop())
+     except Exception as e:
+         print("Exception:", type(e))
+     for value in [1, 2, 3, 4, 5]:
+         s.push(value)
+     for i in range(6):
+         try:
+             print(s.pop())
+         except Exception as e:
+             print("Exception:", type(e))
+    
+    
+     print('\n top example 1')
+     s = MaxStack()
+     try:
+         s.top()
+     except Exception as e:
+         print("No elements in stack", type(e))
+     s.push(10)
+     s.push(20)
+     print(s)
+     print(s.top())
+     print(s.top())
+     print(s)
+    
+     print('\n get_max example 1')
+     s = MaxStack()
+     for value in [1, -20, 15, 21, 21, 40, 50]:
+         print(s, ' ', end='')
+         try:
+             print(s.get_max())
+         except Exception as e:
+             print(type(e))
+         s.push(value)
+     while not s.is_empty():
+         print(s.size(), end='')
+         print(' Pop value:', s.pop(), ' get_max after: ', end='')
+         try:
+             print(s.get_max())
+         except Exception as e:
+             print(type(e))
 
