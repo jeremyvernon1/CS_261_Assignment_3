@@ -80,6 +80,7 @@ class MaxStack:
     def get_max(self) -> object:
         """
         Gets max element
+        TODO: refactor formula to search all elements in O(1)
         """
         # checks if stack is empty
         if self.is_empty():

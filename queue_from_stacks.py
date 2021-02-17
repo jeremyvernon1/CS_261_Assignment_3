@@ -51,37 +51,39 @@ class Queue:
 
     def enqueue(self, value: object) -> None:
         """
-        TODO: Write this implementation
+        Adds element to the end of the queue
         """
-        pass
+        self.s1.push(value)
 
     def dequeue(self) -> object:
         """
-        TODO: Write this implementation
+        Removes element from the beginning of the queue and returns the value
+        TODO: see if you can get value and remove in one pass
         """
-        pass
+        if self.s1.is_empty():
+            raise QueueException
+        popped = self.s1.sll_val.get_back()
+        self.s1.sll_val.remove_back()
+        return popped
 
 # BASIC TESTING
 if __name__ == "__main__":
     pass
 
-    # print('\n# enqueue example 1')
-    # q = Queue()
-    # print(q)
-    # for value in [1, 2, 3, 4, 5]:
-    #     q.enqueue(value)
-    # print(q)
-    #
-    # print('\n# dequeue example 1')
-    # q = Queue()
-    # for value in [1, 2, 3, 4, 5]:
-    #     q.enqueue(value)
-    # print(q)
-    # for i in range(6):
-    #     try:
-    #         print(q.dequeue(), q)
-    #     except Exception as e:
-    #         print("No elements in queue", type(e))
+    print('\n# enqueue example 1')
+    q = Queue()
+    print(q)
+    for value in [1, 2, 3, 4, 5]:
+        q.enqueue(value)
+    print(q)
 
-
-
+    print('\n# dequeue example 1')
+    q = Queue()
+    for value in [1, 2, 3, 4, 5]:
+        q.enqueue(value)
+    print(q)
+    for i in range(6):
+        try:
+            print(q.dequeue(), q)
+        except Exception as e:
+            print("No elements in queue", type(e))
