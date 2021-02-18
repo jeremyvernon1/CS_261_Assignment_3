@@ -215,17 +215,13 @@ class CircularList:
         else:
             iteration = 0
             for i in SimpleLinkedListIterator(self.sentinel):
-                iteration += 1
-                if iteration - 1 == index:
-                    remove_after = i
-                    remove_before = i.next.next
-                    # cleans up connections
-                    current = i.next
-                    current.prev = None
-                    current.next = None
+                if iteration == index:
+                    remove_after = i.prev
+                    remove_before = i.next
                     # establishes new connections
                     remove_after.next = remove_before
                     remove_before.prev = remove_after
+                iteration += 1
 
     def get_front(self) -> object:
         """
@@ -451,6 +447,15 @@ if __name__ == '__main__':
         except Exception as e:
             print(type(e))
     print(lst)
+
+    print('\n# remove_at_index example 2')
+    lst = CircularList([-32343, 64131, -54873, -77700])
+    print(lst)
+    try:
+        lst.remove_at_index(2)
+        print(lst)
+    except Exception as e:
+        print(type(e))
 
     print('\n# get_front example 1')
     lst = CircularList(['A', 'B'])
