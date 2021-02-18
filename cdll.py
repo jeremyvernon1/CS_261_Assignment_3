@@ -409,6 +409,8 @@ class CircularList:
         TODO: Write this implementation
         """
         pass
+        # move the sentinel
+
         # curr = self.sentinel
         # for i in SimpleLinkedListIterator(self.sentinel):
         #     curr.next = curr.prev
@@ -417,9 +419,21 @@ class CircularList:
 
     def remove_duplicates(self) -> None:
         """
-        TODO: Write this implementation
+        Removes duplicate nodes along with the original node
         """
-        pass
+        duplicate_value = None  # saves the value of the original dup
+        for i in SimpleLinkedListIterator(self.sentinel):
+            if i.value == i.next.value or i.value == duplicate_value:
+                duplicate_value = i.value
+                remove_element = i
+                remove_after = i.prev
+                remove_before = i.next
+                # cleans up connections
+                remove_element.next = None
+                remove_element.prev = None
+                # establishes new connections
+                remove_after.next = remove_before
+                remove_before.prev = remove_after
 
     def odd_even(self) -> None:
         """
