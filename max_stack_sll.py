@@ -6,6 +6,23 @@
 
 from sll import *
 
+class SimpleLinkedListIterator:
+    # init function
+    def __init__(self, head):
+        self.head = head
+        self.current = head
+
+    # iter function
+    def __iter__(self):
+        return self
+
+    # advances iterator
+    def __next__(self):
+        if self.current.next is None:
+            raise StopIteration
+        cur = self.current
+        self.current = self.current.next
+        return cur
 
 class StackException(Exception):
     """
@@ -85,14 +102,24 @@ class MaxStack:
         # checks if stack is empty
         if self.is_empty():
             raise StackException
-        # checks if there is only one element in the stack
-        if self.size() > 1:
-            # compares new top of stack with last element
-            second_to_top = self.sll_val.head.next.next.value
-            if self.top() > second_to_top:
-                return self.top()
-            return second_to_top
-        return self.top()
+        # iterates to find the max
+        maximum = self.sll_val.head.next
+        for i in SimpleLinkedListIterator(self.sll_val.head.next):
+            if i.value > maximum.value:
+                maximum = i
+        return maximum.value
+
+        # # checks if stack is empty
+        # if self.is_empty():
+        #     raise StackException
+        # # checks if there is only one element in the stack
+        # if self.size() > 1:
+        #     # compares new top of stack with last element
+        #     second_to_top = self.sll_val.head.next.next.value
+        #     if self.top() > second_to_top:
+        #         return self.top()
+        #     return second_to_top
+        # return self.top()
 
 
 # BASIC TESTING

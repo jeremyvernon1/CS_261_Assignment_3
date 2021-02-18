@@ -353,15 +353,67 @@ class CircularList:
 
     def sort(self) -> None:
         """
-        TODO: Write this implementation
+        Sorts CDLL using bubble sort
         """
-        pass
+        # initializes loop
+        compare_a = self.sentinel.next
+        while True:
+            compare_b = compare_a.next
+            while compare_b is not self.sentinel:
+                # checks if nodes should be swapped
+                if compare_a.value > compare_b.value:
+
+                    # bookmarks the pos
+                    compare_a_resume = compare_b
+
+                    # swaps the nodes
+                    # if nodes are adjacent
+                    if compare_b.prev == compare_a:
+                        compare_a.prev.next = compare_b
+                        compare_b.next.prev = compare_a
+                        compare_a.next = compare_b.next
+                        compare_b.next = compare_a
+                        compare_b.prev = compare_a.prev
+                        compare_a.prev = compare_b
+                    # if nodes are not adjacent
+                    else:
+                        # saves prev and next before changing
+                        compare_a_prev = compare_a.prev
+                        compare_a_next = compare_a.next
+                        compare_b_prev = compare_b.prev
+                        compare_b_next = compare_b.next
+                        # move second element to the prev pos of first element
+                        compare_b.prev = compare_a_prev
+                        compare_a.prev.next = compare_b
+                        compare_b.next = compare_a_next
+                        compare_a.next.prev = compare_b
+                        # move first element to the prev pos of the second element
+                        compare_a.prev = compare_b_prev
+                        compare_b_prev.next = compare_a
+                        compare_a.next = compare_b_next
+                        compare_b_next.prev = compare_a
+
+                    # resumes search from bookmarked pos
+                    compare_a = compare_a_resume
+                # advances compare_b
+                compare_b = compare_b.next
+            # advances compare_a
+            compare_a = compare_a.next
+
+            # provides end condition
+            if compare_a is self.sentinel:
+                break
 
     def rotate(self, steps: int) -> None:
         """
         TODO: Write this implementation
         """
         pass
+        # curr = self.sentinel
+        # for i in SimpleLinkedListIterator(self.sentinel):
+        #     curr.next = curr.prev
+        #     curr.prev = curr.prev.prev
+        #     curr = curr.next
 
     def remove_duplicates(self) -> None:
         """
@@ -560,63 +612,63 @@ if __name__ == '__main__':
         lst.sort()
         print(lst)
 
-    # print('\n# rotate example 1')
-    # source = [_ for _ in range(-20, 20, 7)]
-    # for steps in [1, 2, 0, -1, -2, 28, -100]:
-    #     lst = CircularList(source)
-    #     lst.rotate(steps)
-    #     print(lst, steps)
-    #
-    # print('\n# rotate example 2')
-    # lst = CircularList([10, 20, 30, 40])
-    # for j in range(-1, 2, 2):
-    #     for _ in range(3):
-    #         lst.rotate(j)
-    #         print(lst)
-    #
-    # print('\n# rotate example 3')
-    # lst = CircularList()
-    # lst.rotate(10)
-    # print(lst)
-    #
-    # print('\n# remove_duplicates example 1')
-    # test_cases = (
-    #     [1, 2, 3, 4, 5], [1, 1, 1, 1, 1],
-    #     [], [1], [1, 1], [1, 1, 1, 2, 2, 2],
-    #     [0, 1, 1, 2, 3, 3, 4, 5, 5, 6],
-    #     list("abccd"),
-    #     list("005BCDDEEFI")
-    # )
-    #
-    # for case in test_cases:
-    #     lst = CircularList(case)
-    #     print('INPUT :', lst)
-    #     lst.remove_duplicates()
-    #     print('OUTPUT:', lst)
-    #
-    # print('\n# odd_even example 1')
-    # test_cases = (
-    #     [1, 2, 3, 4, 5], list('ABCDE'),
-    #     [], [100], [100, 200], [100, 200, 300],
-    #     [100, 200, 300, 400],
-    #     [10, 'A', 20, 'B', 30, 'C', 40, 'D', 50, 'E']
-    # )
-    #
-    # for case in test_cases:
-    #     lst = CircularList(case)
-    #     print('INPUT :', lst)
-    #     lst.odd_even()
-    #     print('OUTPUT:', lst)
+    print('\n# rotate example 1')
+    source = [_ for _ in range(-20, 20, 7)]
+    for steps in [1, 2, 0, -1, -2, 28, -100]:
+        lst = CircularList(source)
+        lst.rotate(steps)
+        print(lst, steps)
 
-    # print('\n# add_integer example 1')
-    # test_cases = (
-    #   ([1, 2, 3], 10456),
-    #   ([], 25),
-    #   ([2, 0, 9, 0, 7], 108),
-    #    ([9, 9, 9], 9_999_999),
-    #)
-    # for list_content, integer in test_cases:
-    #    lst = CircularList(list_content)
-    # print('INPUT :', lst, 'INTEGER', integer)
-    # lst.add_integer(integer)
-    # print('OUTPUT:', lst)
+    print('\n# rotate example 2')
+    lst = CircularList([10, 20, 30, 40])
+    for j in range(-1, 2, 2):
+        for _ in range(3):
+            lst.rotate(j)
+            print(lst)
+
+    print('\n# rotate example 3')
+    lst = CircularList()
+    lst.rotate(10)
+    print(lst)
+
+    print('\n# remove_duplicates example 1')
+    test_cases = (
+        [1, 2, 3, 4, 5], [1, 1, 1, 1, 1],
+        [], [1], [1, 1], [1, 1, 1, 2, 2, 2],
+        [0, 1, 1, 2, 3, 3, 4, 5, 5, 6],
+        list("abccd"),
+        list("005BCDDEEFI")
+    )
+
+    for case in test_cases:
+        lst = CircularList(case)
+        print('INPUT :', lst)
+        lst.remove_duplicates()
+        print('OUTPUT:', lst)
+
+    print('\n# odd_even example 1')
+    test_cases = (
+        [1, 2, 3, 4, 5], list('ABCDE'),
+        [], [100], [100, 200], [100, 200, 300],
+        [100, 200, 300, 400],
+        [10, 'A', 20, 'B', 30, 'C', 40, 'D', 50, 'E']
+    )
+
+    for case in test_cases:
+        lst = CircularList(case)
+        print('INPUT :', lst)
+        lst.odd_even()
+        print('OUTPUT:', lst)
+
+    print('\n# add_integer example 1')
+    test_cases = (
+      ([1, 2, 3], 10456),
+      ([], 25),
+      ([2, 0, 9, 0, 7], 108),
+       ([9, 9, 9], 9_999_999),
+    )
+    for list_content, integer in test_cases:
+       lst = CircularList(list_content)
+    print('INPUT :', lst, 'INTEGER', integer)
+    lst.add_integer(integer)
+    print('OUTPUT:', lst)
