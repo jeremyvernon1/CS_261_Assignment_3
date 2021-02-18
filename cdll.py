@@ -147,23 +147,26 @@ class CircularList:
         if index < 0 or index > self.length():
             raise CDLLException
         # inserts new element at index
-        elif self.length() == 0:
+        # beginning of linked list
+        elif self.length() == 0 or index == 0:
             self.add_front(value)
+        # end of linked list
         elif index == self.length():
             self.add_back(value)
+        # middle of linked list
         else:
             iteration = 0
             for i in SimpleLinkedListIterator(self.sentinel):
-                iteration += 1
-                if iteration - 1 == index:
-                    insert_after = i
-                    insert_before = i.next
+                if iteration == index:
+                    insert_before = i
+                    insert_after = i.prev
                     new_element = DLNode(value)
                     insert_after.next = new_element
                     insert_before.prev = new_element
                     new_element.prev = insert_after
                     new_element.next = insert_before
                     return
+                iteration += 1
 
     def remove_front(self) -> None:
         """
@@ -334,16 +337,23 @@ class CircularList:
 
     def reverse(self) -> None:
         """
-        TODO: Write this implementation
+        Reverses a doubly linked list
         """
-        pass
-        # curr = self.sentinel.prev
-        # prev = curr.prev
+        # initialize
+        curr = self.sentinel.prev
+        first_element = self.sentinel.next
+        last_element = self.sentinel.prev
 
-        # while curr is not self.sentinel:
-        #     prev = curr.prev
-        #     curr.prev = curr.next
-        #     curr.next = prev
+        # reverse iterates through the list swapping, prev and next values
+        while curr is not self.sentinel:
+            prev = curr.prev
+            curr.prev = curr.next
+            curr.next = prev
+            curr = curr.next
+
+        # reverses prev and next values for the sentinel
+        self.sentinel.next = last_element
+        self.sentinel.prev = first_element
 
     def sort(self) -> None:
         """
