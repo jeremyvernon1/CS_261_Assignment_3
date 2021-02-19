@@ -525,10 +525,11 @@ class CircularList:
         """
         # gets the value of the first element,
         # then multiplies the value times ten and adds to the running total
+        length = self.length()
         sum = 0
-        if self.length() > 0:
+        if length > 0:
             sum = self.sentinel.next.value
-        if self.length() > 1:
+        if length > 1:
             # calculate the first number
             for i in SimpleLinkedListIterator(self.sentinel.next):
                 sum *= 10
@@ -541,33 +542,33 @@ class CircularList:
         # sums numbers
         sum += num
         sum = int(sum)
+        print(sum)
 
-        # converts sum to a decimal
-        # while sum > 10:
-        #     sum /= 10
+        # count length of sum
+        def count_integer_length(number):
+            count = 0
+            while number >= 10**count:
+                count += 1
+            return count
 
-        # gets each digit, then adds to the list
-        index_pos = 0
-        string_sum = str(sum)
-        while len(string_sum) > 0:
-            digit = int(string_sum[0])
-            string_sum = string_sum[1:]
-            iteration = 0
-            # replace existing element values
-            if index_pos < (self.length()):
-                for i in SimpleLinkedListIterator(self.sentinel):
-                    if index_pos == iteration:
-                        i.value = digit
-                        break
-                    iteration += 1
-            # add new element values
-            else:
-                self.add_back(digit)
+        # get lengths
+        sum_length = count_integer_length(sum)
+        difference = length - sum_length
 
-            # gets the next digit
-            sum -= digit
-            sum *= 10
-            index_pos += 1
+        # add elements to the list
+        iteration = 0
+        for i in SimpleLinkedListIterator(self.sentinel):
+            if iteration >= difference:
+                digit = sum // 10**sum_length % 10
+                i.value = digit
+            iteration += 1
+            sum_length -= 1
+            if i.next is self.sentinel:
+                break
+        while sum_length > 0:
+            digit = sum // 10 ** sum_length % 10
+            self.add_back(digit)
+            sum_length -= 1
 
 
 
@@ -805,6 +806,7 @@ if __name__ == '__main__':
       ([], 25),
       ([2, 0, 9, 0, 7], 108),
        ([9, 9, 9], 9_999_999),
+      ([0, 1, 0, 1, 7, 8, 7, 2, 6], 4857669)
     )
     for list_content, integer in test_cases:
        lst = CircularList(list_content)
