@@ -406,16 +406,60 @@ class CircularList:
 
     def rotate(self, steps: int) -> None:
         """
-        TODO: Write this implementation
+        shifts elements left or right a given number of steps
         """
-        pass
-        # move the sentinel
+        # initializes
+        length_for_rotate = self.length()
+        rotate_index = (length_for_rotate - steps)
 
-        # curr = self.sentinel
-        # for i in SimpleLinkedListIterator(self.sentinel):
-        #     curr.next = curr.prev
-        #     curr.prev = curr.prev.prev
-        #     curr = curr.next
+        # checks that steps is greater than 0
+        if steps > 0 and length_for_rotate > 0:
+            # removes full rotations
+            if steps > length_for_rotate:
+                steps -= length_for_rotate * (steps // length_for_rotate)
+                if steps == 0:
+                    return
+
+
+            # shift to the right
+            while steps > 0:
+                move_element = self.sentinel.prev
+
+                # removes last element's connections
+                remove_after = move_element.prev
+                remove_before = move_element.next
+                remove_after.next = remove_before
+                remove_before.prev = remove_after
+
+                # inserts new element at front
+                prev_first = self.sentinel.next
+                move_element.next = prev_first
+                move_element.prev = prev_first.prev
+                prev_first.prev = move_element
+                self.sentinel.next = move_element
+
+                # decrement steps
+                steps -= 1
+
+        # shift to the left
+        while steps < 0:
+            move_element = self.sentinel.next
+
+            # removes last element's connections
+            remove_after = move_element.prev
+            remove_before = move_element.next
+            remove_after.next = remove_before
+            remove_before.prev = remove_after
+
+            # inserts new element at the back
+            prev_last = self.sentinel.prev
+            self.sentinel.prev = move_element
+            prev_last.next = move_element
+            move_element.prev = prev_last
+            move_element.next = self.sentinel
+
+            # increment steps
+            steps += 1
 
     def remove_duplicates(self) -> None:
         """
@@ -437,15 +481,94 @@ class CircularList:
 
     def odd_even(self) -> None:
         """
-        TODO: Write this implementation
+        Shifts (original) odd index nodes to after the last odd index node
         """
-        pass
+        # initializes
+        odd_even_index = 1
+        last_odd = self.sentinel.next
+        last_even = last_odd.next
+
+        # iterate over to find and move odd index elements
+        for i in SimpleLinkedListIterator(self.sentinel.next):
+            if odd_even_index % 2 == 0:
+
+                move_element = i
+
+                # remove old pos
+                remove_after = move_element.prev
+                remove_before = move_element.next
+                remove_after.next = remove_before
+                remove_before.prev = remove_after
+
+                # inserts odd after last odd element
+                last_odd.next = move_element
+                last_even.prev = move_element
+                move_element.prev = last_odd
+                move_element.next = last_even
+
+                # reinitializes last odd and last even elements
+                last_odd = move_element
+                last_even = last_odd.next
+
+            # increments indices
+            odd_even_index += 1
+            # ends loop
+            if i.next is self.sentinel:
+                return
 
     def add_integer(self, num: int) -> None:
         """
-        TODO: Write this implementation
+        Converts a linked list to a number,
+        Adds the number to a given integer,
+        Separates the digits of the sum,
+        Displays the results in the linked list.
         """
-        pass
+        # gets the value of the first element,
+        # then multiplies the value times ten and adds to the running total
+        sum = 0
+        if self.length() > 0:
+            sum = self.sentinel.next.value
+        if self.length() > 1:
+            # calculate the first number
+            for i in SimpleLinkedListIterator(self.sentinel.next):
+                sum *= 10
+                sum += i.value
+
+                # stop iteration
+                if i.next is self.sentinel:
+                    break
+
+        # sums numbers
+        sum += num
+        sum = int(sum)
+
+        # converts sum to a decimal
+        while sum > 10:
+            sum /= 10
+
+        # gets each digit, then adds to the list
+        index_pos = 0
+        while sum > 0.00001:  # truncates ieee conversion
+            digit = int(sum)
+            iteration = 0
+            # replace existing element values
+            if index_pos < (self.length()):
+                for i in SimpleLinkedListIterator(self.sentinel):
+                    if index_pos == iteration:
+                        i.value = digit
+                        break
+                    iteration += 1
+            # add new element values
+            else:
+                self.add_back(digit)
+
+            # gets the next digit
+            sum -= digit
+            sum *= 10
+            index_pos += 1
+
+
+
 
 if __name__ == '__main__':
 
