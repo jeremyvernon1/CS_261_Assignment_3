@@ -557,15 +557,18 @@ class CircularList:
 
         # add elements to the list
         iteration = 0
+        sum_length -= 1  # to account for 0 based index
         for i in SimpleLinkedListIterator(self.sentinel):
-            if iteration >= difference:
+            if iteration >= difference:  # if list is longer than sum
                 digit = sum // 10**sum_length % 10
                 i.value = digit
+                sum_length -= 1
             iteration += 1
-            sum_length -= 1
+            # stop iteration
             if i.next is self.sentinel:
                 break
-        while sum_length > 0:
+        # add remaining digits
+        while sum_length > -1:  # -1 to allow the 0 index
             digit = sum // 10 ** sum_length % 10
             self.add_back(digit)
             sum_length -= 1
@@ -806,7 +809,8 @@ if __name__ == '__main__':
       ([], 25),
       ([2, 0, 9, 0, 7], 108),
        ([9, 9, 9], 9_999_999),
-      ([0, 1, 0, 1, 7, 8, 7, 2, 6], 4857669)
+      ([0, 1, 0, 1, 7, 8, 7, 2, 6], 4857669),
+      ([1,2,3], 10456)
     )
     for list_content, integer in test_cases:
        lst = CircularList(list_content)
