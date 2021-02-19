@@ -542,7 +542,6 @@ class CircularList:
         # sums numbers
         sum += num
         sum = int(sum)
-        print(sum)
 
         # count length of sum
         def count_integer_length(number):
