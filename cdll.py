@@ -543,13 +543,15 @@ class CircularList:
         sum = int(sum)
 
         # converts sum to a decimal
-        while sum > 10:
-            sum /= 10
+        # while sum > 10:
+        #     sum /= 10
 
         # gets each digit, then adds to the list
         index_pos = 0
-        while sum > 0.00001:  # truncates ieee conversion
-            digit = int(sum)
+        string_sum = str(sum)
+        while len(string_sum) > 0:
+            digit = int(string_sum[0])
+            string_sum = string_sum[1:]
             iteration = 0
             # replace existing element values
             if index_pos < (self.length()):
